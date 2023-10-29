@@ -1,0 +1,29 @@
+.link {
+    --stroke-width: 2;
+    --stroke: black;
+}
+
+.node {
+    box-sizing: border-box;
+    padding: 10px;
+    height: 100%;
+    border: 1px solid black;
+    border-radius: 5px;
+}
+
+.node.highlighted {
+    border: 5px solid #a87b00;
+}
+
+.node.toggled {
+    border: 5px solid #b6026b;
+}
+
+.node-header {
+    text-align: center;
+    font-size: 14pt;
+}
+
+.node-content {
+    margin-top: 5px;
+}
