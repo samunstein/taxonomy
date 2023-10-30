@@ -1,9 +1,10 @@
 import { useCallback, useEffect } from 'react';
 import './App.css';
-import { NodeData, configureChart, getNodeComponentRender } from './chart/Chart';
+import { configureChart, getNodeComponentRender } from './chart/Chart';
 import { OrgChart } from 'd3-org-chart';
 import './chart/Chart.css';
 import { ButtonsComponent } from './buttons/Buttons';
+import { NodeData } from './NodeData';
 
 function App() {
   const sampleData = [

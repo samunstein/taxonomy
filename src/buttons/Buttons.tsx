@@ -1,13 +1,19 @@
 import { OrgChart } from 'd3-org-chart';
-import { NODE_HEIGHT, NODE_WIDTH, NodeData } from '../chart/Chart';
+import { NODE_HEIGHT, NODE_WIDTH } from '../chart/Chart';
 import './Buttons.css';
 import { HierarchyNode } from 'd3';
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import { useDebounce } from 'use-debounce';
+import { NodeData, NodeOrdering, getOrdering, order } from '../NodeData';
 
 export function ButtonsComponent(props: {data: NodeData[], chart: OrgChart<NodeData>}) {
     const [rawSearchValue, setSearchValue] = useState("");
     const [searchValue] = useDebounce(rawSearchValue, 500);
+    const [searchedValues, setSearchedValues] = useState<NodeData[]>([]);
+
+    useEffect(() => {
+        setSearchedValues(searchResults(searchValue))
+    }, [searchValue])
 
     function highlightToClosestAncestor(_: React.MouseEvent<HTMLButtonElement, MouseEvent>) {        
         const toggled = props.chart.clearHighlighting().getChartState().allNodes?.filter(d => d.data.toggled);
@@ -41,8 +47,6 @@ export function ButtonsComponent(props: {data: NodeData[], chart: OrgChart<NodeD
 
             props.chart.render();
         }
-
-        
     }
 
     function clearChoices(_: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
@@ -54,9 +58,21 @@ export function ButtonsComponent(props: {data: NodeData[], chart: OrgChart<NodeD
 
     function searchTextChange(event: ChangeEvent<HTMLInputElement>) {
         const value = event.target.value;
-        console.log(value);
         setSearchValue(value);
     };
+
+    function searchResults(search: string): NodeData[] {
+        if (search.length < 3) return [];
+        const withOrdering = props.chart.getChartState().data?.map(n => [n, getOrdering(n, search)]) as [NodeData, NodeOrdering][];
+        const sorted = withOrdering?.filter(([_, ordering]) => Math.min(...ordering) < Infinity);
+        sorted.sort((a, b) => order(a[1], b[1]));
+        return sorted.map(([node, _]) => node).slice(0, 10);
+    }
+
+    function goToNode(node: NodeData) {
+        node._centered = true;
+        props.chart.setExpanded(node.id).render();
+    }
 
     return (
         <div className='buttons'>
@@ -64,11 +80,17 @@ export function ButtonsComponent(props: {data: NodeData[], chart: OrgChart<NodeD
             <button onClick={clearChoices}>Clear choices</button>
             <div>
                 <span>Search for node: </span>
-                <input type='text' id='search' value={rawSearchValue} onChange={searchTextChange}></input>
+                <input type='text' id='search' onChange={searchTextChange}></input>
             </div>
             
-            <div>
-                {searchValue}
+            <div className='search-results'>
+                {searchedValues.map(node => 
+                    <div key={node.id}>
+                        {node.name}
+                        <button onClick={_ => goToNode(node)}>Click</button>
+                    </div>
+                    
+                )}
             </div>
         </div>
     )

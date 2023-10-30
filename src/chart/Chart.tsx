@@ -4,25 +4,13 @@ import './Chart.css';
 import { select } from "d3-selection";
 import { HierarchyNode } from 'd3';
 import { createRoot } from 'react-dom/client';
+import { NodeData } from '../NodeData';
 
 export const NODE_WIDTH = 200;
 export const NODE_HEIGHT = 120;
 
 const d3 = {
     select
-}
-
-export interface ChartValues {
-    _upToTheRootHighlighted?: boolean;
-    _highlighted?: boolean;
-}
-
-export interface NodeData extends ChartValues {
-    readonly name: string;
-    readonly description: string;
-    readonly id: number;
-    readonly parentId: number | null;
-    toggled?: boolean;
 }
 
 export function toggle(chart: OrgChart<NodeData>, node: NodeData) {
