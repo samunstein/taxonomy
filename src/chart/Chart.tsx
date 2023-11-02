@@ -23,10 +23,10 @@ export function getNodeComponentRender(chart: OrgChart<NodeData>) {
         return (
         <div className={d.data.toggled ? 'node toggled' : (d.data._highlighted || d.data._upToTheRootHighlighted ? 'node highlighted' : 'node')}>
             <div className='node-header'>
-                {d.data.name}
+                {d.data.scientific_name}
             </div>
             <div className='node-content'>
-                {d.data.description}
+                {d.data.name}
             </div>
             <button onClick={_ => toggle(chart, d.data)}>Toggle</button>
         </div>

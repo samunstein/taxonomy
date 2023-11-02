@@ -86,7 +86,7 @@ export function ButtonsComponent(props: {data: NodeData[], chart: OrgChart<NodeD
             <div className='search-results'>
                 {searchedValues.map(node => 
                     <div key={node.id}>
-                        {node.name}
+                        {node.scientific_name} ({node.name})
                         <button onClick={_ => goToNode(node)}>Click</button>
                     </div>
                     

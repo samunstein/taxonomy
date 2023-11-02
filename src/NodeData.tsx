@@ -5,8 +5,9 @@ interface ChartValues {
 }
 
 export interface NodeData extends ChartValues {
-    readonly name: string;
-    readonly description: string;
+    readonly scientific_name: string;
+    readonly name?: string;
+    readonly rank: string;
     readonly id: number;
     readonly parentId: number | null;
     toggled?: boolean;
@@ -33,7 +34,7 @@ export function getOrdering(node: NodeData, search: string): NodeOrdering {
 
     let ordering: NodeOrdering = [];
 
-    const attributes: string[] = [node.name, node.description].map(insensitive);
+    const attributes: string[] = [node.scientific_name, node.name? node.name : ''].map(insensitive);
 
     searches.forEach(term => {
         attributes.forEach(attr => {
