@@ -1,4 +1,4 @@
-import { OrgChart } from 'd3-org-chart';
+import { OrgChart } from '../d3-org-chart';
 import './Chart.css';
 
 import { select } from "d3-selection";
@@ -13,12 +13,12 @@ const d3 = {
     select
 }
 
-export function toggle(chart: OrgChart<NodeData>, node: NodeData) {
+export function toggle(chart: OrgChart, node: NodeData) {
     node.toggled = !node.toggled;
     chart.render();
 }
 
-export function getNodeComponentRender(chart: OrgChart<NodeData>) {
+export function getNodeComponentRender(chart: OrgChart) {
     function nodeComponent(d: HierarchyNode<NodeData>): JSX.Element {
         return (
         <div className={d.data.toggled ? 'node toggled' : (d.data._highlighted || d.data._upToTheRootHighlighted ? 'node highlighted' : 'node')}>
@@ -36,17 +36,17 @@ export function getNodeComponentRender(chart: OrgChart<NodeData>) {
 }
 
 
-export function configureChart(chart: OrgChart<NodeData>, nodeClick: (node: NodeData) => void, renderNode: (node: HierarchyNode<NodeData>) => JSX.Element): OrgChart<NodeData> {
-    return chart
-        .nodeWidth((_) => NODE_WIDTH)
-        .nodeHeight((_) => NODE_HEIGHT)
-        .onNodeClick((node) => {
+export function configureChart(chart: OrgChart, nodeClick: (node: NodeData) => void, renderNode: (node: HierarchyNode<NodeData>) => JSX.Element): OrgChart {
+    return (chart as any)
+        .nodeWidth((_: any) => NODE_WIDTH)
+        .nodeHeight((_: any) => NODE_HEIGHT)
+        .onNodeClick((node: any) => {
             nodeClick(node.data);
         })
         .compact(false)
         .linkYOffset(0)
         .nodeContent(() => `<div class="org-chart-node" style="height: ${NODE_HEIGHT}px"></div>`)
-        .nodeUpdate(function (this: HTMLElement, d) {
+        .nodeUpdate(function (this: HTMLElement, d: any) {
 
             
           const container = this.querySelector(".org-chart-node")!;
@@ -55,7 +55,7 @@ export function configureChart(chart: OrgChart<NodeData>, nodeClick: (node: Node
           root.render(reactNode);
         })
         .svgHeight(window.innerHeight - 20)
-        .linkUpdate(function (d: any, i, arr) {
+        .linkUpdate(function (d: any, i: any, arr: any) {
             d3.select(this)
               .attr('stroke', (d: any) =>
                 d.data._upToTheRootHighlighted ? '#a87b00' : '#000000'
