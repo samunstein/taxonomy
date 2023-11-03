@@ -22,13 +22,15 @@ export function getNodeComponentRender(chart: OrgChart) {
     function nodeComponent(d: HierarchyNode<NodeData>): JSX.Element {
         return (
         <div className={d.data.toggled ? 'node toggled' : (d.data._highlighted || d.data._upToTheRootHighlighted ? 'node highlighted' : 'node')}>
-            <div className='node-header'>
-                {d.data.scientific_name}
+            <div className='node-names'>
+              {d.data.name ? <div className='node-name'>{d.data.name}</div> : <></>}
+              <div className='node-sci-name'>{d.data.scientific_name}</div>
             </div>
-            <div className='node-content'>
-                {d.data.name}
+            <div className='node-meta'>
+              <div className='node-rank'>{d.data.rank}</div>
+              <button onClick={_ => toggle(chart, d.data)}>O</button>
             </div>
-            <button onClick={_ => toggle(chart, d.data)}>Toggle</button>
+            
         </div>
         );
     }
@@ -47,8 +49,6 @@ export function configureChart(chart: OrgChart, nodeClick: (node: NodeData) => v
         .linkYOffset(0)
         .nodeContent(() => `<div class="org-chart-node" style="height: ${NODE_HEIGHT}px"></div>`)
         .nodeUpdate(function (this: HTMLElement, d: any) {
-
-            
           const container = this.querySelector(".org-chart-node")!;
           const root = createRoot(container);
           const reactNode = renderNode(d as unknown as HierarchyNode<NodeData>);
@@ -58,10 +58,10 @@ export function configureChart(chart: OrgChart, nodeClick: (node: NodeData) => v
         .linkUpdate(function (d: any, i: any, arr: any) {
             d3.select(this)
               .attr('stroke', (d: any) =>
-                d.data._upToTheRootHighlighted ? '#a87b00' : '#000000'
+                d.data._upToTheRootHighlighted ? '#0089a8' : '#000000'
               )
               .attr('stroke-width', (d: any) =>
-                d.data._upToTheRootHighlighted ? 6 : 1
+                d.data._upToTheRootHighlighted ? 6 : 2
               );
 
             if (d.data._upToTheRootHighlighted) {

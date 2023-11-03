@@ -79,10 +79,19 @@ export function ButtonsComponent(props: {chart: OrgChart, data: NodeData[]}) {
 
     return (
         <div className='buttons'>
-            <button onClick={highlightToClosestAncestor}>Highlight to ancestor</button>
+            <span className='tooltip'>
+                ?
+                <span className='tooltiptext'>
+                    Made from data downloaded from https://www.ncbi.nlm.nih.gov/guide/taxonomy/.
+                    <br/>
+                    <br/>
+                    The closest common ancestor is highlighted for any number of chosen nodes.
+                </span>
+            </span>
+            <button onClick={highlightToClosestAncestor}>Highlight to common ancestor</button>
             <button onClick={clearChoices}>Clear choices</button>
             <div>
-                <span>Search for node: </span>
+                <span>Search: </span>
                 <input type='text' id='search' onChange={searchTextChange}></input>
             </div>
             
@@ -90,8 +99,8 @@ export function ButtonsComponent(props: {chart: OrgChart, data: NodeData[]}) {
                 {searchedValues.map(node => 
                     <div key={node.id} className='search-result'>
                         <div className='search-info'>
-                            <div className='search-sci-name'>{node.scientific_name} ({node.rank})</div>
                             {node.name ? <div className='search-name'>{node.name}</div> : <></>}
+                            <div className='search-sci-row'><span className='search-sci-name'>{node.scientific_name}</span><span className='search-rank'>({node.rank})</span></div>
                         </div>
                         <button onClick={_ => goToNode(node)}>Find</button>
                     </div>

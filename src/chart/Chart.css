@@ -1,6 +1,5 @@
-.link {
-    --stroke-width: 2;
-    --stroke: black;
+#chart {
+    background-color: rgb(248, 234, 208);
 }
 
 .node {
@@ -9,21 +8,54 @@
     height: 100%;
     border: 1px solid black;
     border-radius: 5px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background-color: white;
+    cursor: default;
 }
 
 .node.highlighted {
-    border: 5px solid #a87b00;
+    border: 5px solid #0089a8;
 }
 
 .node.toggled {
-    border: 5px solid #b6026b;
+    border: 5px solid #76307f;
 }
 
-.node-header {
-    text-align: center;
+.node-name {
     font-size: 14pt;
+    margin-bottom: 5px;
 }
 
-.node-content {
-    margin-top: 5px;
+.node-names {
+    flex-grow: 1;
+    font-size: 12pt;
+    margin-right: 5px;
+    word-wrap: break-word;
+}
+
+.node-sci-name {
+    font-style: italic;
+}
+
+.node-meta {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-end;
+    word-wrap: break-word;
+}
+
+.node-meta > button {
+    height: 30px;
+    width: 30px;
+    border-radius: 10px;
+    font-weight: bold;
+    font-size: 14pt;
+    cursor: pointer;
+}
+
+.node-button-div {
+    cursor: pointer;
 }
