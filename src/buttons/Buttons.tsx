@@ -36,9 +36,9 @@ export function ButtonsComponent(props: {chart: OrgChart, data: NodeData[]}) {
             toggled.push(node);
 
             const y0 = (node as any).y as number - NODE_HEIGHT / 2;
-            const x0 = Math.min(...toggled.map((n: any) => (n as any).x)) - NODE_WIDTH;
-            const x1 = Math.max(...toggled.map((n: any) => (n as any).x)) + NODE_WIDTH;
-            const y1 = Math.max(...toggled.map((n: any) => (n as any).y)) + NODE_HEIGHT * 3/2;
+            const x0 = Math.min(...toggled.map((n: any) => n.x)) - NODE_WIDTH;
+            const x1 = Math.max(...toggled.map((n: any) => n.x)) + NODE_WIDTH;
+            const y1 = Math.max(...toggled.map((n: any) => n.y)) + NODE_HEIGHT * 3/2;
 
             props.chart.zoomTreeBounds({x0, x1, y0, y1, params: {
                 animate: true,
