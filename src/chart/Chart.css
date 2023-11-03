@@ -33,6 +33,7 @@
     font-size: 12pt;
     margin-right: 5px;
     word-wrap: break-word;
+    min-width: 0;
 }
 
 .node-sci-name {
