@@ -1451,7 +1451,6 @@ export class OrgChart {
 
     clearHighlighting() {
         const attrs = this.getChartState();
-        console.log(attrs);
         attrs.allNodes.forEach(d => {
             d.data._highlighted = false;
             d.data._upToTheRootHighlighted = false;

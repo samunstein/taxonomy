@@ -85,7 +85,7 @@ export function ButtonsComponent(props: {chart: OrgChart, data: NodeData[]}) {
                     Made from data downloaded from https://www.ncbi.nlm.nih.gov/guide/taxonomy/.
                     <br/>
                     <br/>
-                    The closest common ancestor is highlighted for any number of chosen nodes.
+                    Click on nodes to choose them. Highlight to the closest common ancestor of any number of chosen nodes.
                 </span>
             </span>
             <button onClick={highlightToClosestAncestor}>Highlight to common ancestor</button>

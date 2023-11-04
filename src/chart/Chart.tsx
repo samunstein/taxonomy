@@ -21,16 +21,12 @@ export function toggle(chart: OrgChart, node: NodeData) {
 export function getNodeComponentRender(chart: OrgChart) {
     function nodeComponent(d: HierarchyNode<NodeData>): JSX.Element {
         return (
-        <div className={d.data.toggled ? 'node toggled' : (d.data._highlighted || d.data._upToTheRootHighlighted ? 'node highlighted' : 'node')}>
+        <div onClick={(_) => toggle(chart, d.data)} className={d.data.toggled ? 'node toggled' : (d.data._highlighted || d.data._upToTheRootHighlighted ? 'node highlighted' : 'node')}>
+            <div className='node-rank'>{d.data.rank}</div>
             <div className='node-names'>
               {d.data.name ? <div className='node-name'>{d.data.name}</div> : <></>}
               <div className='node-sci-name'>{d.data.scientific_name}</div>
             </div>
-            <div className='node-meta'>
-              <div className='node-rank'>{d.data.rank}</div>
-              <button onClick={_ => toggle(chart, d.data)}>O</button>
-            </div>
-            
         </div>
         );
     }
@@ -38,13 +34,10 @@ export function getNodeComponentRender(chart: OrgChart) {
 }
 
 
-export function configureChart(chart: OrgChart, nodeClick: (node: NodeData) => void, renderNode: (node: HierarchyNode<NodeData>) => JSX.Element): OrgChart {
+export function configureChart(chart: OrgChart, renderNode: (node: HierarchyNode<NodeData>) => JSX.Element): OrgChart {
     return (chart as any)
         .nodeWidth((_: any) => NODE_WIDTH)
         .nodeHeight((_: any) => NODE_HEIGHT)
-        .onNodeClick((node: any) => {
-            nodeClick(node.data);
-        })
         .compact(false)
         .linkYOffset(0)
         .nodeContent(() => `<div class="org-chart-node" style="height: ${NODE_HEIGHT}px"></div>`)

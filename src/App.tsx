@@ -21,7 +21,7 @@ function App() {
       .then(async (dat) => {
         console.log(dat.length);
         setData(dat as NodeData[]);
-        (configureChart(chart, (_) => null, renderNode) as any)
+        (configureChart(chart, renderNode) as any)
           .container("#chart")
           .data(dat)
           .render()
