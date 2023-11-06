@@ -27,8 +27,32 @@
     color: #270;
 }
 
+.node-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
 .node-rank {
-    text-align: right;
+    text-align: center;
+    flex-grow: 1;
+}
+
+.node-wiki {
+    cursor: pointer;
+    width: 25px;
+    height: 25px;
+    padding: 0;
+    border-radius: 5px;
+    font-family: 'Linux Libertine';
+    font-size: 12pt;
+    color: black;
+    text-decoration: none;
+    border: 1px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #DDD;
 }
 
 .node-names {
@@ -45,4 +69,25 @@
 
 .node-button-div {
     cursor: pointer;
+}
+
+.node-arrow {
+    position: absolute;
+    cursor: pointer;
+    left: 87px;
+    background-color: rgba(255, 255, 255, 0.5);
+    border: 1px solid #666;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 20px;
+    border-radius: 2px;
+}
+ 
+.node-arrow.up {
+    top: -22px;
+}
+ 
+.node-arrow.down {
+    bottom: -38px;
 }

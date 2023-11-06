@@ -70,7 +70,7 @@ export class OrgChart {
             nodeHeight: d => 150,  //  Configure each node height, use with caution, it is better to have the same value set for all nodes
             neighbourMargin: (n1, n2) => 80, // Configure margin between two nodes, use with caution, it is better to have the same value set for all nodes
             siblingsMargin: d3Node => 20, // Configure margin between two siblings, use with caution, it is better to have the same value set for all nodes
-            childrenMargin: d => 60, // Configure margin between parent and children, use with caution, it is better to have the same value set for all nodes
+            childrenMargin: d => 80, // Configure margin between parent and children, use with caution, it is better to have the same value set for all nodes
             compactMarginPair: d => 100, // Configure margin between two nodes in compact mode, use with caution, it is better to have the same value set for all nodes
             compactMarginBetween: (d3Node => 20), // Configure margin between two nodes in compact mode, use with caution, it is better to have the same value set for all nodes
             nodeButtonWidth: d => 40, // Configure expand & collapse button width
@@ -1173,12 +1173,12 @@ export class OrgChart {
 
         // If childrens are expanded
         if (d.children) {
-            //Collapse them
-            d._children = d.children;
-            d.children = null;
-
-            // Set descendants expanded property to false
-            this.setExpansionFlagToChildren(d, false);
+            d.descendants().forEach(n => {
+                if (n.children) {
+                    n._children = n.children;
+                    n.children = null;
+                }
+            });
         } else {
             // Expand children
             d.children = d._children;
@@ -1198,27 +1198,6 @@ export class OrgChart {
         attrs.onExpandOrCollapse(d);
 
     }
-
-    // This function changes `expanded` property to descendants
-    setExpansionFlagToChildren({ data, children, _children }, flag) {
-        // Set flag to the current property
-        data._expanded = flag;
-
-        // Loop over and recursively update expanded children's descendants
-        if (children) {
-            children.forEach((d) => {
-                this.setExpansionFlagToChildren(d, flag);
-            });
-        }
-
-        // Loop over and recursively update collapsed children's descendants
-        if (_children) {
-            _children.forEach((d) => {
-                this.setExpansionFlagToChildren(d, flag);
-            });
-        }
-    }
-
 
     // Method which only expands nodes, which have property set "expanded=true"
     expandSomeNodes(d) {

@@ -5,11 +5,16 @@
     border: 1px solid black;
     padding: 10px;
     background-color: rgb(206, 206, 206);
-    max-width: 250px;
+    width: 250px;
 }
 
 .buttons > * {
     margin: 5px 0;
+}
+
+.search-results {
+    max-height: 500px;
+    overflow-y: auto;
 }
 
 .search-result {
@@ -32,10 +37,12 @@
 .search-info {
     margin-right: 5px;
     flex-grow: 1;
+    min-width: 0;
 }
 
 .search-name {
     margin-bottom: 5px;
+    word-wrap: break-word;
 }
 
 .search-sci-row {
@@ -47,6 +54,8 @@
 .search-sci-name {
     font-style: italic;
     margin-right: 5px;
+    min-width: 0;
+    word-wrap: break-word;
 }
 
 /* Tooltip container */
@@ -86,4 +95,39 @@
 .tooltip:hover .tooltiptext {
     visibility: visible;
 }
-  
+
+.top-buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.home-button {
+    cursor: pointer;
+}
+
+.search-clear {
+    cursor: pointer;
+    margin-left: 5px;
+}
+
+.zoom-buttons {
+    position: fixed;
+    right: 0;
+}
+
+.zoom-button {
+    width: 35px;
+    height: 35px;
+    cursor: pointer;
+    text-align: center;
+    background-color: white;
+    font-size: 20pt;
+    border: 1px solid black;
+    border-radius: 5px;
+    margin: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}

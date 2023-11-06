@@ -71,28 +71,34 @@ export function ButtonsComponent(props: {chart: OrgChart, data: NodeData[]}) {
     }
 
     function goToNode(node: NodeData) {
-        // Needs 2 renders because the first one makes the node visible, and only after that _centered does something.
-        // Or something like that. IDK. This just works.
         props.chart.setCentered(node.id).render();
-        props.chart.render();
+    }
+
+    function goToRoot() {
+        props.chart.setCentered(1).render(); 
     }
 
     return (
         <div className='buttons'>
-            <span className='tooltip'>
-                ?
-                <span className='tooltiptext'>
-                    Made from data downloaded from https://www.ncbi.nlm.nih.gov/guide/taxonomy/.
-                    <br/>
-                    <br/>
-                    Click on nodes to choose them. Highlight to the closest common ancestor of any number of chosen nodes.
+            <div className='top-buttons'>
+                <span className='tooltip'>
+                    ?
+                    <span className='tooltiptext'>
+                        Made from data downloaded from https://www.ncbi.nlm.nih.gov/guide/taxonomy/.
+                        <br/>
+                        <br/>
+                        Click on nodes to choose them. Highlight to the closest common ancestor of any number of chosen nodes.
+                    </span>
                 </span>
-            </span>
+                <span className='home-button' onClick={_ => goToRoot()}>🏠</span>
+            </div>
+            
             <button onClick={highlightToClosestAncestor}>Highlight to common ancestor</button>
             <button onClick={clearChoices}>Clear choices</button>
             <div>
                 <span>Search: </span>
-                <input type='text' id='search' onChange={searchTextChange}></input>
+                <input type='text' id='search' onChange={searchTextChange} value={rawSearchValue}></input>
+                <span onClick={_ => setSearchValue("")} className='search-clear'>✖</span>
             </div>
             
             <div className='search-results'>
@@ -106,6 +112,11 @@ export function ButtonsComponent(props: {chart: OrgChart, data: NodeData[]}) {
                     </div>
                     
                 )}
+            </div>
+
+            <div className='zoom-buttons'>
+                <div className='zoom-button' onClick={_ => props.chart.zoomIn()}>+</div>
+                <div className='zoom-button' onClick={_ => props.chart.zoomOut()}>–</div>
             </div>
         </div>
     )

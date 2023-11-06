@@ -34,7 +34,7 @@ export function getOrdering(node: NodeData, search: string): NodeOrdering {
 
     let ordering: NodeOrdering = [];
 
-    const attributes: string[] = [node.scientific_name, node.name? node.name : ''].map(insensitive);
+    const attributes: string[] = [node.name? node.name : '', node.scientific_name].map(insensitive);
 
     searches.forEach(term => {
         attributes.forEach(attr => {
